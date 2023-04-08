@@ -13,3 +13,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
+# https://qadrlabs.com/post/rest-api-authentication-with-laravel-sanctum
+# https://qadrlabs.com/post/rest-api-crud-with-laravel-sanctum
