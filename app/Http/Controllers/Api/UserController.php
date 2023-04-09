@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -54,7 +56,8 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|max:255|unique:users',
-            'password' => 'required|string|min:8'
+            'password' => 'required|string|min:8',
+            'role' => 'required|string|max:255'
         ]);
 
         if ($validator->fails()) {
@@ -89,7 +92,7 @@ class UserController extends Controller
         //
         $user = User::find($id);
         return response()->json([
-            'data' => $user,
+            'data' => new UserResource($user),
             'message' => 'Fetch user with id '.$id,
             'success' => true
         ]);
@@ -126,7 +129,35 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('crud-users');
         //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'password' => 'string|min:8',
+            'role' => 'string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'data' => [],
+                'message' => $validator->errors(),
+                'success' => false
+            ]);
+        }
+
+        $user = User::find($id);
+        $data = array(
+            "name" => $request->get('name')
+        );
+        if ($request->get('password')) $data['password'] = Hash::make($request->get('password'));
+        if ($request->get('role')) $data['role'] = $request->get('role');
+        $user->update($data);
+
+        return response()->json([
+            'data' => new UserResource($user),
+            'message' => 'User updated successfully',
+            'success' => true
+        ]);
     }
 
     /**
