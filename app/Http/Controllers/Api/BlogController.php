@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Library\ApiHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BlogResource;
 use App\Models\Blog;
@@ -9,8 +10,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Auth;
+
 class BlogController extends Controller
 {
+    use ApiHelpers;
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,6 @@ class BlogController extends Controller
      */
     public function index()
     {
-        //
         $blogs = Blog::latest()->get();
         return response()->json([
             'data' => BlogResource::collection($blogs),
@@ -64,7 +68,8 @@ class BlogController extends Controller
             'title' => $request->get('title'),
             'content' => $request->get('content'),
             'status' => $request->get('status'),
-            'slug' => Str::slug($request->get('title'))
+            'slug' => Str::slug($request->get('title')),
+            'id_user' => Auth::user()->id
         ]);
 
         return response()->json([
