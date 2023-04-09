@@ -83,27 +83,27 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show($id)
-    // {
-    //     $this->authorize('crud-users');
-    //     //
-    //     $users = User::find($id);
-    //     return response()->json([
-    //         'data' => UserResource::collection($users),
-    //         'message' => 'Fetch user with id '.$id,
-    //         'success' => true
-    //     ]);
-    // }
-    public function show(User $user)
+    public function show($id)
     {
         $this->authorize('crud-users');
         //
+        $user = User::find($id);
         return response()->json([
-            'data' => new UserResource($user),
-            'message' => 'Data user found',
+            'data' => $user,
+            'message' => 'Fetch user with id '.$id,
             'success' => true
         ]);
     }
+    // public function show(User $user)
+    // {
+    //     $this->authorize('crud-users');
+    //     //
+    //     return response()->json([
+    //         'data' => new UserResource($user),
+    //         'message' => 'Data user found',
+    //         'success' => true
+    //     ]);
+    // }
 
 
     /**
@@ -137,6 +137,14 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('crud-users');
         //
+        $user = User::find($id);
+        $user->delete();
+        return response()->json([
+            'data' => [],
+            'message' => 'User deleted successfully',
+            'success' => true
+        ]);
     }
 }
