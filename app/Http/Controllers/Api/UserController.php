@@ -49,7 +49,32 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('crud-users');
         //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255|unique:users',
+            'password' => 'required|string|min:8'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role
+        ]);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'data' => $user,
+            'access_token' => $token,
+            'token_type' => 'Bearer'
+        ]);
     }
 
     /**
@@ -58,10 +83,28 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    // public function show($id)
+    // {
+    //     $this->authorize('crud-users');
+    //     //
+    //     $users = User::find($id);
+    //     return response()->json([
+    //         'data' => UserResource::collection($users),
+    //         'message' => 'Fetch user with id '.$id,
+    //         'success' => true
+    //     ]);
+    // }
+    public function show(User $user)
     {
+        $this->authorize('crud-users');
         //
+        return response()->json([
+            'data' => new UserResource($user),
+            'message' => 'Data user found',
+            'success' => true
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
