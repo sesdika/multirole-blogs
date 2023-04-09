@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class BlogController extends Controller
 {
@@ -20,6 +21,8 @@ class BlogController extends Controller
      */
     public function index()
     {
+        $this->authorize('retrieve-all-blogs');
+        //
         $blogs = Blog::latest()->get();
         return response()->json([
             'data' => BlogResource::collection($blogs),
@@ -84,6 +87,9 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
+        if (!Gate::allows('rud-blogs', $blog)) {
+            abort(403);
+        }
         //
         return response()->json([
             'data' => new BlogResource($blog),
@@ -112,6 +118,9 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
+        if (!Gate::allows('rud-blogs', $blog)) {
+            abort(403);
+        }
         //
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:155',
@@ -149,6 +158,9 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
+        if (!Gate::allows('rud-blogs', $blog)) {
+            abort(403);
+        }
         //
         $blog->delete();
 

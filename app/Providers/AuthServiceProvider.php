@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Models\Blog;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -28,9 +29,22 @@ class AuthServiceProvider extends ServiceProvider
 
         //
         Gate::define('crud-users', function (User $user) {
-            // echo $user->role;
             if ($user->role === 'admin') {
                 return true;
+            }
+        });
+
+        Gate::define('retrieve-all-blogs', function (User $user) {
+            if ($user->role === 'admin' || $user->role === 'manager') {
+                return true;
+            }
+        });
+
+        Gate::define('rud-blogs', function (User $user, Blog $blog) {
+            if ($user->role === 'admin' || $user->role === 'manager') {
+                return true;
+            } else {
+                return $user->id === $blog->id_user;
             }
         });
     }
