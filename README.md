@@ -23,13 +23,13 @@ Make sure active directory is on root project. Execute following commands:
 - Logout : http://127.0.0.1:8000/api/logout using POST method. In Body tab, choose __form-data__, input __email__ and __password__. In Authorization tab, choose Bearer Token type, paste the Token.
 - CRUD blogs : http://127.0.0.1:8000/api/blogs
 	- Create blog : using POST method. In Body tab, choose __form-data__, input __title__, __content__, and __status__. In Authorization tab, choose Bearer Token type, paste the Token.
-	- Retrieve all blog (just for 'admin' and 'manager' role) : http://127.0.0.1:8000/api/blogs/[id] using GET method. In Authorization tab, choose Bearer Token type, paste the Token.
+	- Retrieve all blog (just for 'admin' and 'manager' role) : http://127.0.0.1:8000/api/blogs using GET method. In Authorization tab, choose Bearer Token type, paste the Token.
 	- Retrieve certain blog : http://127.0.0.1:8000/api/blogs/[id] using GET method. In Authorization tab, choose Bearer Token type, paste the Token.
 	- Update certain blog : http://127.0.0.1:8000/api/blogs/[id] using PUT method. In Params tab, input __title__, __content__, and __status__. In Authorization tab, choose Bearer Token type, paste the Token.
 	- Delete certain blog : http://127.0.0.1:8000/api/blogs/[id] using DELETE method. In Authorization tab, choose Bearer Token type, paste the Token.
 - CRUD users (just for 'admin' role): http://127.0.0.1:8000/api/users
 	- Create user : using POST method. In Body tab, choose __form-data__, input __name__, __email__ , __password__, and __role__. In Authorization tab, choose Bearer Token type, paste the Token.
-	- Retrieve all user (just for 'admin' and 'manager' role) : http://127.0.0.1:8000/api/users/[id] using GET method. In Authorization tab, choose Bearer Token type, paste the Token.
+	- Retrieve all user (just for 'admin' and 'manager' role) : http://127.0.0.1:8000/api/users using GET method. In Authorization tab, choose Bearer Token type, paste the Token.
 	- Retrieve certain user : http://127.0.0.1:8000/api/users/[id] using GET method. In Authorization tab, choose Bearer Token type, paste the Token.
 	- Update certain user : http://127.0.0.1:8000/api/users/[id] using PUT method. In Params tab, input __name__, __email__ , __password__, and __role__. In Authorization tab, choose Bearer Token type, paste the Token.
 	- Delete certain user : http://127.0.0.1:8000/api/users/[id] using DELETE method. In Authorization tab, choose Bearer Token type, paste the Token.
