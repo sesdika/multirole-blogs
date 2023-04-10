@@ -21,7 +21,6 @@ Make sure active directory is on root project. Execute following commands:
 - Login : http://127.0.0.1:8000/api/login using POST method. In Body tab, choose __form-data__, input __email__ and __password__. Copy the token for the next API route.
 - Get self identity : http://127.0.0.1:8000/api/user using GET method. In Body tab, choose __form-data__, input __email__ and __password__. In Authorization tab, choose Bearer Token type, paste the Token.
 - Logout : http://127.0.0.1:8000/api/logout using POST method. In Body tab, choose __form-data__, input __email__ and __password__. In Authorization tab, choose Bearer Token type, paste the Token.
-- Logout : http://127.0.0.1:8000/api/logout using POST method. In Body tab, choose __form-data__, input __email__ and __password__. In Authorization tab, choose Bearer Token type, paste the Token.
 - CRUD blogs : http://127.0.0.1:8000/api/blogs
 	- Create blog : using POST method. In Body tab, choose __form-data__, input __title__, __content__, and __status__. In Authorization tab, choose Bearer Token type, paste the Token.
 	- Retrieve all blog (just for 'admin' and 'manager' role) : http://127.0.0.1:8000/api/blogs/[id] using GET method. In Authorization tab, choose Bearer Token type, paste the Token.
